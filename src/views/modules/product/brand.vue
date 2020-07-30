@@ -107,10 +107,10 @@
 
 <script>
   import AddOrUpdate from './brand-add-or-update'
-  import http from "../../../utils/httpRequest";
+  import http from '../../../utils/httpRequest'
 
-  export default {
-    data() {
+export default {
+    data () {
       return {
         dataForm: {
           key: ''
@@ -127,12 +127,12 @@
     components: {
       AddOrUpdate
     },
-    activated() {
+    activated () {
       this.getDataList()
     },
     methods: {
       // 获取数据列表
-      getDataList() {
+      getDataList () {
         this.dataListLoading = true
         this.$http({
           url: this.$http.adornUrl('/product/brand/list'),
@@ -153,8 +153,8 @@
           this.dataListLoading = false
         })
       },
-      updateStatus(data) {
-        let {brandId, showStatus} = data;
+      updateStatus (data) {
+        let {brandId, showStatus} = data
         this.$http({
           url: this.$http.adornUrl('/product/brand/update'),
           method: 'post',
@@ -163,33 +163,33 @@
           this.$message({
             message: '状态修改成功',
             type: 'success'
-          });
-        });
+          })
+        })
       },
       // 每页数
-      sizeChangeHandle(val) {
+      sizeChangeHandle (val) {
         this.pageSize = val
         this.pageIndex = 1
         this.getDataList()
       },
       // 当前页
-      currentChangeHandle(val) {
+      currentChangeHandle (val) {
         this.pageIndex = val
         this.getDataList()
       },
       // 多选
-      selectionChangeHandle(val) {
+      selectionChangeHandle (val) {
         this.dataListSelections = val
       },
       // 新增 / 修改
-      addOrUpdateHandle(id) {
+      addOrUpdateHandle (id) {
         this.addOrUpdateVisible = true
         this.$nextTick(() => {
           this.$refs.addOrUpdate.init(id)
         })
       },
       // 删除
-      deleteHandle(id) {
+      deleteHandle (id) {
         var ids = id ? [id] : this.dataListSelections.map(item => {
           return item.brandId
         })
