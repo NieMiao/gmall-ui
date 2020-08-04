@@ -153,10 +153,11 @@ export default {
           this.dataListLoading = false
         })
       },
+      // 修改状态
       updateStatus (data) {
         let {brandId, showStatus} = data
         this.$http({
-          url: this.$http.adornUrl('/product/brand/update'),
+          url: this.$http.adornUrl('/product/brand/status'),
           method: 'post',
           data: this.$http.adornData({brandId, showStatus}, false)
         }).then(({data}) => {
