@@ -3,8 +3,7 @@
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
     :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
-             label-width="140px">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="140px">
       <el-form-item label="品牌名" prop="name">
         <el-input v-model="dataForm.name" placeholder="品牌名"></el-input>
       </el-form-item>
@@ -41,10 +40,9 @@
 <script>
   import SingleUpload from '../../../components/upload/singleUpload'
 
-export default {
+  export default {
     components: {SingleUpload},
-    comments: {SingleUpload},
-    data () {
+    data() {
       return {
         visible: false,
         dataForm: {
@@ -57,57 +55,49 @@ export default {
           sort: 0
         },
         dataRule: {
-          name: [
-            {
-              required: true,
-              validator: (rule, value, callback) => {
-                if (!value) {
-                  callback('品牌名称不能为空')
-                }
-  },
-              trigger: 'blur'
-            }
-          ],
+          name: [{ required: true, message: "品牌名不能为空", trigger: "blur" }],
           logo: [
-            {required: true, message: '品牌logo地址不能为空', trigger: 'blur'}
+            { required: true, message: "品牌logo地址不能为空", trigger: "blur" }
           ],
           descript: [
-            {required: true, message: '介绍不能为空', trigger: 'blur'}
+            { required: true, message: "介绍不能为空", trigger: "blur" }
           ],
           showStatus: [
             {required: true, message: '显示状态[0-不显示；1-显示]不能为空', trigger: 'blur'}
           ],
           firstLetter: [
             {
-              required: true,
               validator: (rule, value, callback) => {
-                if (!value) {
-                  callback('首字母不能为空')
+                if (value == "") {
+                  callback(new Error("首字母必须填写"));
                 } else if (!/^[a-zA-Z]$/.test(value)) {
-                  callback('首字母的范围应是a-z或者A-Z')
+                  callback(new Error("首字母必须a-z或者A-Z之间"));
+                } else {
+                  callback();
                 }
-  },
-              trigger: 'blur'
+              },
+              trigger: "blur"
             }
           ],
           sort: [
             {
-              required: true,
               validator: (rule, value, callback) => {
-                if (value === '') {
-                  callback('排序字段不能为空')
-                } else if (!Number.isInteger(value) || value < 0) {
-                  callback('排序字段必须是一个大于0的整数')
+                if (value == "") {
+                  callback(new Error("排序字段必须填写"));
+                } else if (!Number.isInteger(value) || value<0) {
+                  callback(new Error("排序必须是一个大于等于0的整数"));
+                } else {
+                  callback();
                 }
-  },
-              trigger: 'blur'
+              },
+              trigger: "blur"
             }
           ]
         }
       }
     },
     methods: {
-      init (id) {
+      init(id) {
         this.dataForm.brandId = id || 0
         this.visible = true
         this.$nextTick(() => {

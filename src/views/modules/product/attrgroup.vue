@@ -93,7 +93,7 @@
 </template>
 
 <script>
-  import Category from "../../common/category";
+  import Category from "../../modules/common/category";
   import AddOrUpdate from './attrgroup-add-or-update';
   export default {
     components: {Category,AddOrUpdate},

@@ -2,7 +2,8 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible">
+    :visible.sync="visible"
+    @closed="cleanDialog">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="140px">
     <el-form-item label="组名" prop="attrGroupName">
       <el-input v-model="dataForm.attrGroupName" placeholder="组名"></el-input>
@@ -67,6 +68,9 @@
       }
     },
     methods: {
+      cleanDialog () {
+        this.dataForm.catelogIds = [];
+      },
       init (id) {
         this.dataForm.attrGroupId = id || 0
         this.visible = true
@@ -79,11 +83,12 @@
               params: this.$http.adornParams()
             }).then(({data}) => {
               if (data.success) {
-                this.dataForm.attrGroupName = data.data.attrGroupName
-                this.dataForm.sort = data.data.sort
-                this.dataForm.descript = data.data.descript
-                this.dataForm.icon = data.data.icon
-                this.dataForm.catelogId = data.data.catelogId
+                this.dataForm.attrGroupName = data.data.attrGroupName;
+                this.dataForm.sort = data.data.sort;
+                this.dataForm.descript = data.data.descript;
+                this.dataForm.icon = data.data.icon;
+                this.dataForm.catelogId = data.data.catelogId;
+                this.dataForm.catelogIds = data.data.catelogIds
               }
             })
           }
